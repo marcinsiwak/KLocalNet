@@ -29,3 +29,5 @@ dependencyResolutionManagement {
         mavenCentral()
     }
 }
+
+include(":klocalnet")
