@@ -112,7 +112,10 @@ mavenPublishing {
             developer {
                 id = "marcinsiwak"
                 name = "Kotlin Developer"
+                email = "marcinsiwak15@gmail.com"
                 url = "https://github.com/marcinsiwak/"
+                organization = "CodeFlow Marcin Siwak"
+                organizationUrl = "https://github.com/marcinsiwak/"
             }
         }
         scm {
