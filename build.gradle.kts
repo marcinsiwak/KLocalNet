@@ -10,7 +10,7 @@ plugins {
 kotlin {
     jvm()
     androidLibrary {
-        namespace = "pl.msiwak.lib_connection"
+        namespace = "io.github.marcinsiwak.klocalnet"
         compileSdk = 36
         minSdk = 24
 
@@ -64,15 +64,15 @@ kotlin {
             }
         }
     }
-
-    swiftPMDependencies {
-        localPackage(
-            path = projectDir.resolve("TelegraphWrapper"),
-            products = listOf(product("TelegraphObjCWrapper", platforms = setOf(iOS())))
-        )
-        localPackage(
-            path = projectDir.resolve("NetworkWrapper"),
-            products = listOf(product("NetworkWrapper", platforms = setOf(iOS())))
-        )
-    }
+//
+//    swiftPMDependencies {
+//        localPackage(
+//            path = projectDir.resolve("TelegraphWrapper"),
+//            products = listOf(product("TelegraphObjCWrapper", platforms = setOf(iOS())))
+//        )
+//        localPackage(
+//            path = projectDir.resolve("NetworkWrapper"),
+//            products = listOf(product("NetworkWrapper", platforms = setOf(iOS())))
+//        )
+//    }
 }
