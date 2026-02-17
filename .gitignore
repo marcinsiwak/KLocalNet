@@ -2,3 +2,5 @@
 .idea
 .kotlin
 .gradle
+signing.properties
+klocalnet/build

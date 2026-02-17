@@ -1,5 +1,6 @@
 [versions]
 agp = "8.13.1"
+vanniktechMavenPublish = "0.34.0"
 androidx-activityCompose = "1.9.3"
 androidx-appcompat = "1.7.0"
 androidx-constraintlayout = "2.2.0"
@@ -113,3 +114,4 @@ firebaseCrashlytics = { id = "com.google.firebase.crashlytics", version.ref = "f
 
 android-kotlin-multiplatform-library = { id = "com.android.kotlin.multiplatform.library", version.ref = "agp" }
 kotlin-android = { id = "org.jetbrains.kotlin.android", version.ref = "kotlin" }
+vanniktech-mavenPublish = { id = "com.vanniktech.maven.publish", version.ref = "vanniktechMavenPublish" }

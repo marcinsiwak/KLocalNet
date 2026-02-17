@@ -1,11 +1,13 @@
 import org.jetbrains.kotlin.gradle.dsl.JvmTarget
+import java.util.Properties
 
 plugins {
     alias(libs.plugins.kotlinMultiplatform)
     alias(libs.plugins.android.kotlin.multiplatform.library)
     alias(libs.plugins.serialization)
     id("io.github.ttypic.swiftklib") version "0.6.4"
-    id("com.vanniktech.maven.publish") version "0.36.0"
+    alias(libs.plugins.vanniktech.mavenPublish)
+    id("signing")
 }
 
 group = "io.github.marcinsiwak"
@@ -84,5 +86,39 @@ kotlin {
 buildscript {
     dependencies.constraints {
         "classpath"("org.jetbrains.kotlin:kotlin-gradle-plugin:2.2.21-titan-211!!")
+    }
+}
+
+mavenPublishing {
+    publishToMavenCentral()
+
+    signAllPublications()
+
+    coordinates(group.toString(), "klocalnet", version.toString())
+
+    pom {
+        name = "KLocalNet library"
+        description = "Local network communication library for Kotlin Multiplatform projects"
+        inceptionYear = "2026"
+        url = "https://github.com/marcinsiwak/KLocalNet/"
+        licenses {
+            license {
+                name = "The Apache License, Version 2.0"
+                url = "https://www.apache.org/licenses/LICENSE-2.0.txt"
+                distribution = "https://www.apache.org/licenses/LICENSE-2.0.txt"
+            }
+        }
+        developers {
+            developer {
+                id = "marcinsiwak"
+                name = "Kotlin Developer"
+                url = "https://github.com/marcinsiwak/"
+            }
+        }
+        scm {
+            url = "https://github.com/marcinsiwak/KLocalNet/"
+            connection = "scm:git:git://github.com/marcinsiwak/KLocalNet.git"
+            developerConnection = "scm:git:ssh://git@github.com/marcinsiwak/KLocalNet.git"
+        }
     }
 }

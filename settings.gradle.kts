@@ -1,5 +1,4 @@
 rootProject.name = "KLocalNet"
-enableFeaturePreview("TYPESAFE_PROJECT_ACCESSORS")
 
 pluginManagement {
     repositories {
@@ -30,4 +29,4 @@ dependencyResolutionManagement {
     }
 }
 
-include(":klocalnet")
+include(":KLocalNet")
