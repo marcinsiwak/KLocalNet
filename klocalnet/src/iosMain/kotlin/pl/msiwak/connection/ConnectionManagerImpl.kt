@@ -17,7 +17,7 @@ import platform.Network.nw_path_status_satisfied
 import platform.Network.nw_path_uses_interface_type
 import platform.darwin.DISPATCH_QUEUE_PRIORITY_BACKGROUND
 import platform.darwin.dispatch_get_global_queue
-import swiftPMImport.CardsTheGame.lib.connection.NetworkWrapper
+import swiftPMImport.io.github.marcinsiwak.KLocalNet.NetworkWrapper
 
 @OptIn(ExperimentalForeignApi::class)
 class ConnectionManagerImpl : ConnectionManager {

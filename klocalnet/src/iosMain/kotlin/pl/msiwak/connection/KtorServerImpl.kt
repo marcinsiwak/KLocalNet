@@ -14,9 +14,9 @@ import kotlinx.coroutines.sync.Mutex
 import kotlinx.coroutines.sync.withLock
 import platform.Foundation.NSError
 import platform.darwin.NSObject
-import swiftPMImport.CardsTheGame.lib.connection.TGServer
-import swiftPMImport.CardsTheGame.lib.connection.TGServerWebSocketDelegateProtocol
-import swiftPMImport.CardsTheGame.lib.connection.TGWebSocket
+import swiftPMImport.io.github.marcinsiwak.KLocalNet.TGServer
+import swiftPMImport.io.github.marcinsiwak.KLocalNet.TGServerWebSocketDelegateProtocol
+import swiftPMImport.io.github.marcinsiwak.KLocalNet.TGWebSocket
 
 class KtorServerImpl() : KtorServer {
 

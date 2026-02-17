@@ -1,5 +1,4 @@
 import org.jetbrains.kotlin.gradle.dsl.JvmTarget
-import java.util.Properties
 
 plugins {
     alias(libs.plugins.kotlinMultiplatform)
@@ -7,7 +6,6 @@ plugins {
     alias(libs.plugins.serialization)
     id("io.github.ttypic.swiftklib") version "0.6.4"
     alias(libs.plugins.vanniktech.mavenPublish)
-    id("signing")
 }
 
 group = "io.github.marcinsiwak"
@@ -40,7 +38,7 @@ kotlin {
         iosSimulatorArm64()
     ).forEach {
         it.binaries.framework {
-            baseName = "lib_connection"
+            baseName = "io.github.marcinsiwak.klocalnet"
         }
     }
     jvmToolchain(17)
