@@ -1,7 +1,7 @@
 name: Publish
 on:
   release:
-    types: [released, prereleased]
+    types: [released, pre_released]
 jobs:
   publish:
     name: Release build and publish
@@ -14,13 +14,11 @@ jobs:
         with:
           distribution: 'zulu'
           java-version: 21
-      - name: Decode GPG key
-        run: echo "${{ secrets.GPG_KEY_CONTENTS }}" | base64 --decode > ${{ runner.temp }}/gpg_key.txt
       - name: Publish to MavenCentral
-        run: ./gradlew publishToMavenCentral --no-configuration-cache
+        run: ./gradlew publishAllPublicationsToMavenCentralRepository --no-configuration-cache
         env:
           ORG_GRADLE_PROJECT_mavenCentralUsername: ${{ secrets.MAVEN_CENTRAL_USERNAME }}
           ORG_GRADLE_PROJECT_mavenCentralPassword: ${{ secrets.MAVEN_CENTRAL_PASSWORD }}
           ORG_GRADLE_PROJECT_signingInMemoryKeyId: ${{ secrets.SIGNING_KEY_ID }}
           ORG_GRADLE_PROJECT_signingInMemoryKeyPassword: ${{ secrets.SIGNING_PASSWORD }}
-          ORG_GRADLE_PROJECT_signingInMemoryKey: ${{ runner.temp }}/gpg_key.txt
+          ORG_GRADLE_PROJECT_signingInMemoryKey: ${{ secrets.GPG_KEY_CONTENTS }}
