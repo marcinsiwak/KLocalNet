@@ -1,11 +1,11 @@
 name: Publish
 on:
   release:
-    types: [released, pre_released]
+    types: [released, prereleased]
 jobs:
   publish:
     name: Release build and publish
-    runs-on: macOS-latest
+    runs-on: macos-26-large
     steps:
       - name: Check out code
         uses: actions/checkout@v4
