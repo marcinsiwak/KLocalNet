@@ -9,7 +9,7 @@ plugins {
 }
 
 group = "io.github.marcinsiwak"
-version = "1.0.2"
+version = "1.0.3"
 
 kotlin {
     jvm()
@@ -70,12 +70,14 @@ kotlin {
     }
 
     swiftPMDependencies {
-        localPackage(
-            path = projectDir.resolve("TelegraphWrapper"),
-            products = listOf(product("TelegraphObjCWrapper", platforms = setOf(iOS())))
+        `package`(
+            url = url("https://github.com/marcinsiwak/TelegraphWrapper.git"),
+            version = from("1.0.6"),
+            products = listOf(product("TelegraphObjCWrapper", platforms = setOf(iOS()))),
         )
-        localPackage(
-            path = projectDir.resolve("NetworkWrapper"),
+        `package`(
+            url = url("https://github.com/marcinsiwak/NetworkWrapper.git"),
+            version = from("1.0.0"),
             products = listOf(product("NetworkWrapper", platforms = setOf(iOS())))
         )
     }
