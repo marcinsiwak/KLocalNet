@@ -29,7 +29,7 @@ import kotlinx.coroutines.withContext
 import kotlin.time.Duration.Companion.minutes
 import kotlin.time.Duration.Companion.seconds
 
-class KtorServerImpl : KtorServer {
+internal class KtorServerImpl : KtorServer {
     private val _messages = MutableSharedFlow<String>()
     override val messages: Flow<String> = _messages.asSharedFlow()
 

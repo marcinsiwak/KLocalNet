@@ -6,7 +6,7 @@ import kotlinx.serialization.KSerializer
 import pl.msiwak.connection.model.WebSocketEvent
 import kotlin.reflect.KClass
 
-interface MyConnection {
+interface KLocalNetManager {
 
     val isWifiConnected: StateFlow<Boolean>
 

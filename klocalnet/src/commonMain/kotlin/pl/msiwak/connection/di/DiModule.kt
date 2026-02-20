@@ -1,15 +1,19 @@
 package pl.msiwak.connection.di
 
+import org.koin.core.module.Module
 import org.koin.dsl.module
 import pl.msiwak.connection.ElectionService
 import pl.msiwak.connection.KtorClient
-import pl.msiwak.connection.MyConnection
-import pl.msiwak.connection.MyConnectionImpl
+import pl.msiwak.connection.KLocalNetManager
+import pl.msiwak.connection.KLocalNetManagerImpl
 import pl.msiwak.connection.engine.EngineProvider
 
-val module = module {
+internal expect val platformModule: Module
+
+internal val module = module {
     single { ElectionService(get()) }
     single { KtorClient(get()) }
     single { EngineProvider() }
-    single<MyConnection> { MyConnectionImpl(get(), get(), get(), get()) }
+    single<KLocalNetManager> { KLocalNetManagerImpl(get(), get(), get(), get()) }
+    includes(platformModule)
 }

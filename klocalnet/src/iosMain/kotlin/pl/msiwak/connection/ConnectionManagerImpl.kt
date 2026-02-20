@@ -20,7 +20,7 @@ import platform.darwin.dispatch_get_global_queue
 import swiftPMImport.io.github.marcinsiwak.KLocalNet.NetworkWrapper
 
 @OptIn(ExperimentalForeignApi::class)
-class ConnectionManagerImpl : ConnectionManager {
+internal class ConnectionManagerImpl : ConnectionManager {
 
     private val udpListenerWrapper = NetworkWrapper()
 

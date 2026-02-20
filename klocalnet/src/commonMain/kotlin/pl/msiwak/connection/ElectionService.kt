@@ -20,9 +20,8 @@ import kotlinx.serialization.json.Json
 import kotlin.time.Clock
 import kotlin.time.ExperimentalTime
 
-class ElectionService(
-    private val connectionManager: ConnectionManager,
-    // private val globalLoaderManager: GlobalLoaderManager
+internal class ElectionService(
+    private val connectionManager: ConnectionManager
 ) {
     private var electionInProgress = false
     private val candidates = hashMapOf<String, DeviceCandidate>()

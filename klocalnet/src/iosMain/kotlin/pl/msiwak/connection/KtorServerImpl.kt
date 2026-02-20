@@ -18,7 +18,7 @@ import swiftPMImport.io.github.marcinsiwak.KLocalNet.TGServer
 import swiftPMImport.io.github.marcinsiwak.KLocalNet.TGServerWebSocketDelegateProtocol
 import swiftPMImport.io.github.marcinsiwak.KLocalNet.TGWebSocket
 
-class KtorServerImpl() : KtorServer {
+internal class KtorServerImpl() : KtorServer {
 
     private val _messages = MutableSharedFlow<String>()
     override val messages: Flow<String> = _messages.asSharedFlow()

@@ -34,7 +34,7 @@ import java.net.Socket
 import java.net.SocketTimeoutException
 
 
-class ConnectionManagerImpl : ConnectionManager {
+internal class ConnectionManagerImpl : ConnectionManager {
 
     private var networkIp: String? = null
     private val request: NetworkRequest

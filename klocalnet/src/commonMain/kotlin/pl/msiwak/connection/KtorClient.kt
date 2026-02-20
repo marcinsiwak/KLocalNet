@@ -31,9 +31,7 @@ import pl.msiwak.connection.model.ClientActions
 import pl.msiwak.connection.model.WebSocketEvent
 import kotlin.time.Duration.Companion.seconds
 
-class KtorClient(engine: EngineProvider) {
-    private var scope = CoroutineScope(Dispatchers.Main)
-
+internal class KtorClient(engine: EngineProvider) {
     private val _isConnected = MutableStateFlow(false)
     val isConnected = _isConnected.asStateFlow()
 

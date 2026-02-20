@@ -29,12 +29,12 @@ import kotlin.reflect.KClass
 
 private const val PORT = 63287
 
-class MyConnectionImpl(
+internal class KLocalNetManagerImpl(
     private val ktorClient: KtorClient,
     private val ktorServer: KtorServer,
     private val electionService: ElectionService,
     private val connectionManager: ConnectionManager
-) : MyConnection {
+) : KLocalNetManager {
 
     private var electedHostIp: String? = null
     private var job: Job? = null
