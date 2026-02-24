@@ -78,6 +78,9 @@ internal class KtorServerImpl() : KtorServer {
                 println("OUTPUT: Server already running")
                 return
             }
+            if (server?.isRunning() == true) {
+                return
+            }
             server = TGServer()
             server?.setConcurrencyWithConcurencyNumber(5) // change name in wrapper
             println("OUTPUT: Server starting on $host:$port")
@@ -94,7 +97,12 @@ internal class KtorServerImpl() : KtorServer {
     }
 
     override suspend fun stopServer() {
-        server?.stop()
+        serverMutex.withLock {
+            server?.stop()
+            server = null
+            println("OUTPUT: Server stopped")
+            _messages.emit("Server stopped")
+        }
     }
 
     override suspend fun sendMessage(userId: String, message: String) {
