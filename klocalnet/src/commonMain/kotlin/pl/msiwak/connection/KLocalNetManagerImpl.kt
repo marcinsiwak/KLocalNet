@@ -22,7 +22,6 @@ import kotlinx.serialization.KSerializer
 import pl.msiwak.connection.Json.json
 import pl.msiwak.connection.exception.LocalIpNotFoundException
 import pl.msiwak.connection.model.ClientActions
-import pl.msiwak.connection.model.ServerActions
 import pl.msiwak.connection.model.WebSocketEvent
 import pl.msiwak.connection.model.WifiState
 import kotlin.reflect.KClass
@@ -52,11 +51,9 @@ internal class KLocalNetManagerImpl(
 
     private val scope = CoroutineScope(Dispatchers.IO)
 
-    private val errorHandler = CoroutineExceptionHandler { _, throwable ->}
+    private val errorHandler = CoroutineExceptionHandler { _, throwable -> }
 
     override val serverMessages: SharedFlow<WebSocketEvent> = ktorServer.messages
-        .map(::mapMessage)
-//        .onEach(::handleWebSocketEvent)
         .shareIn(
             scope = scope,
             started = SharingStarted.Eagerly,
@@ -161,27 +158,6 @@ internal class KLocalNetManagerImpl(
 
     override fun setHasSession(hasSession: Boolean, lastUpdate: Long) {
         electionService.setHasSession(hasSession, lastUpdate)
-    }
-
-    private fun mapMessage(message: String): WebSocketEvent {
-        println("Map messages: $message")
-        return when {
-            message.startsWith("Client disconnected: ") -> ClientActions.UserDisconnected(message.substringAfter("Client disconnected: "))
-            message.contains("Server started") -> ServerActions.ServerStarted
-            message.contains("Server stopped") -> ClientActions.ServerDownDetected
-            else -> json.decodeFromString<WebSocketEvent>(message)
-        }
-    }
-
-    private suspend fun handleWebSocketEvent(webSocketEvent: WebSocketEvent) {
-        when (webSocketEvent) {
-            is ClientActions.UserDisconnected -> ktorServer.closeSocket(webSocketEvent.id)
-            is ClientActions.ServerDownDetected -> {
-                _isLoading.value = true //to remove
-            }
-
-            else -> Unit
-        }
     }
 
     private suspend fun handleClientWebSocketEvent(webSocketEvent: WebSocketEvent) {

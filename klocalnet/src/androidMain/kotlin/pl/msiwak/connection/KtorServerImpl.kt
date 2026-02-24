@@ -26,12 +26,16 @@ import kotlinx.coroutines.selects.select
 import kotlinx.coroutines.sync.Mutex
 import kotlinx.coroutines.sync.withLock
 import kotlinx.coroutines.withContext
+import pl.msiwak.connection.Json.json
+import pl.msiwak.connection.model.ClientActions
+import pl.msiwak.connection.model.ServerActions
+import pl.msiwak.connection.model.WebSocketEvent
 import kotlin.time.Duration.Companion.minutes
 import kotlin.time.Duration.Companion.seconds
 
 internal class KtorServerImpl : KtorServer {
-    private val _messages = MutableSharedFlow<String>()
-    override val messages: Flow<String> = _messages.asSharedFlow()
+    private val _messages = MutableSharedFlow<WebSocketEvent>()
+    override val messages: Flow<WebSocketEvent> = _messages.asSharedFlow()
 
     private var activeSessions = mutableMapOf<String, WebSocketSession>()
 
@@ -47,7 +51,7 @@ internal class KtorServerImpl : KtorServer {
                 return
             }
             println("OUTPUT: Server starting on $host:$port")
-            _messages.emit("Server started")
+            _messages.emit(ServerActions.ServerStarted)
 
             server = embeddedServer(CIO, port = port, host = host) {
                 configureServer()
@@ -60,7 +64,7 @@ internal class KtorServerImpl : KtorServer {
             server?.stop(1000, 1000)
             server = null
             println("OUTPUT: Server stopped")
-            _messages.emit("Server stopped")
+            _messages.emit(ClientActions.ServerDownDetected)
         }
     }
 
@@ -91,7 +95,7 @@ internal class KtorServerImpl : KtorServer {
                                     is Frame.Text -> {
                                         val receivedText = frame.readText()
                                         println("OUTPUT: KtorServerImpl Received text: $receivedText")
-                                        _messages.emit(receivedText)
+                                        _messages.emit(json.decodeFromString<WebSocketEvent>(receivedText))
                                         sendMessageToAll(receivedText)
                                     }
 
@@ -122,7 +126,7 @@ internal class KtorServerImpl : KtorServer {
                             )
                         )
                         activeSessions.remove(userId)
-                        _messages.emit("Client disconnected: $userId")
+                        _messages.emit(ClientActions.UserDisconnected(userId))
 //                        cancel()
                     }
                 }

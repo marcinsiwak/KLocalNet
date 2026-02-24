@@ -1,10 +1,11 @@
 package pl.msiwak.connection
 
 import kotlinx.coroutines.flow.Flow
+import pl.msiwak.connection.model.WebSocketEvent
 
-interface KtorServer {
+internal interface KtorServer {
 
-    val messages: Flow<String>
+    val messages: Flow<WebSocketEvent>
     suspend fun startServer(host: String, port: Int)
     suspend fun stopServer()
 

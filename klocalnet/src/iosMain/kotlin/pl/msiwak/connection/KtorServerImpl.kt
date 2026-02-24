@@ -12,6 +12,10 @@ import kotlinx.coroutines.flow.asSharedFlow
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.sync.Mutex
 import kotlinx.coroutines.sync.withLock
+import pl.msiwak.connection.Json.json
+import pl.msiwak.connection.model.ClientActions
+import pl.msiwak.connection.model.ServerActions
+import pl.msiwak.connection.model.WebSocketEvent
 import platform.Foundation.NSError
 import platform.darwin.NSObject
 import swiftPMImport.io.github.marcinsiwak.KLocalNet.TGServer
@@ -20,8 +24,8 @@ import swiftPMImport.io.github.marcinsiwak.KLocalNet.TGWebSocket
 
 internal class KtorServerImpl() : KtorServer {
 
-    private val _messages = MutableSharedFlow<String>()
-    override val messages: Flow<String> = _messages.asSharedFlow()
+    private val _messages = MutableSharedFlow<WebSocketEvent>()
+    override val messages: Flow<WebSocketEvent> = _messages.asSharedFlow()
 
     private var activeSessions = mutableMapOf<String, TGWebSocket>()
 
@@ -41,7 +45,7 @@ internal class KtorServerImpl() : KtorServer {
         ) {
             println("OUTPUT: Received message: $didReceiveText")
             scope.launch {
-                _messages.emit(didReceiveText)
+                _messages.emit(json.decodeFromString<WebSocketEvent>(didReceiveText))
             }
         }
 
@@ -55,7 +59,7 @@ internal class KtorServerImpl() : KtorServer {
             activeSessions.entries.firstOrNull { it.value == webSocketDidDisconnect }?.key?.let {
                 activeSessions.remove(it)
                 scope.launch {
-                    _messages.emit("Client disconnected: $it")
+                    _messages.emit(ClientActions.UserDisconnected(it))
                 }
             }
         }
@@ -84,7 +88,7 @@ internal class KtorServerImpl() : KtorServer {
             server = TGServer()
             server?.setConcurrencyWithConcurencyNumber(5) // change name in wrapper
             println("OUTPUT: Server starting on $host:$port")
-            _messages.emit("Server started")
+            _messages.emit(ServerActions.ServerStarted)
             server?.setWebSocketDelegate(
                 webSocketDelegate = delegate
             )
@@ -101,7 +105,7 @@ internal class KtorServerImpl() : KtorServer {
             server?.stop()
             server = null
             println("OUTPUT: Server stopped")
-            _messages.emit("Server stopped")
+            _messages.emit(ClientActions.ServerDownDetected)
         }
     }
 

@@ -61,9 +61,7 @@ internal class ConnectionManagerImpl : ConnectionManager {
     private var networkIp: String? = null
 
     override suspend fun broadcastMessage(msg: String, port: Int) {
-        if (networkIp == null) {
-            networkIp = getLocalIpAddress()
-        }
+        if (networkIp == null) networkIp = getLocalIpAddress()
         udpListenerWrapper.sendBroadcastWithMsg(msg, networkIp ?: return, port, {})
     }
 }

@@ -4,7 +4,7 @@ import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.SharedFlow
 import pl.msiwak.connection.model.WifiState
 
-interface ConnectionManager {
+internal interface ConnectionManager {
 
     fun observeWifiState(): Flow<WifiState>
 

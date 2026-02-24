@@ -9,7 +9,7 @@ import pl.msiwak.connection.model.ServerActions
 import pl.msiwak.connection.model.WebSocketEvent
 import kotlin.reflect.KClass
 
-object Json {
+internal object Json {
 
     lateinit var json: Json
 
